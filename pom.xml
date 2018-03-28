@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!--<parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>-->
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mk.college</groupId>
+    <artifactId>act-bin-output</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>act-bin-output</name>
+    <description>act-bin-output</description>
+    <inceptionYear>2017</inceptionYear>
+    <organization>
+        <name>mk-college</name>
+        <url>http://mk.life/</url>
+    </organization>
+    <properties>
+        <java.version>1.8</java.version>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <act.version>1.8.4</act.version>
+        <app.entry>com.mk.college.Application</app.entry>
+        <HikariCP.version>2.7.8</HikariCP.version>
+        <mysql.connector.java.version>6.0.6</mysql.connector.java.version>
+        <act.beetlsql.version>1.4.4</act.beetlsql.version>
+        <logback.version>1.2.3</logback.version>
+        <simplemagic.version>1.12</simplemagic.version>
+
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+
+        <jpush.client.version>3.3.5</jpush.client.version>
+        <jiguang.common.version>1.1.1</jiguang.common.version>
+        <netty.all.version>4.1.22.Final</netty.all.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
+
+        <httpclient.version>4.5.3</httpclient.version>
+
+        <com.aliyuncs.java.core.version>3.2.3</com.aliyuncs.java.core.version>
+        <com.aliyuncs.java.dysmsapi.version>1.0.0</com.aliyuncs.java.dysmsapi.version>
+        <act.beetl.version>1.4.0</act.beetl.version>
+        <jieba.version>1.0.2</jieba.version>
+        <redisson.version>3.6.1</redisson.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <jxl.version>2.6.12</jxl.version>
+        <ooxml.version>3.17</ooxml.version>
+        <hutool.version>4.0.6</hutool.version>
+
+        <apidoc.version>0.0.5</apidoc.version>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.5</version>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>build/assembly/pkg.xml</descriptor>
+                            </descriptors>
+                            <outputDirectory>${project.build.directory}/dist/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.actframework</groupId>
+            <artifactId>act</artifactId>
+            <version>${act.version}</version>
+        </dependency><!-- act-framework -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency><!-- logback -->
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.college.url><![CDATA[jdbc:mysql://123.56.48.38:3306/college?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.college.url>
+                <db.college.username>root</db.college.username>
+                <db.college.password>eMj9090123123_mysql</db.college.password>
+
+                <db.mk.url><![CDATA[jdbc:mysql://123.56.48.38:3306/1024mk?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.mk.url>
+                <db.mk.username>root</db.mk.username>
+                <db.mk.password>eMj9090123123_mysql</db.mk.password>
+
+                <act.http.port>1999</act.http.port>
+                <act.cli.port>1800</act.cli.port>
+
+                <app.qiniu.path><![CDATA[D:\\emeker\\dev\\userfaceimg\\]]></app.qiniu.path>
+                <app.fileview.path><![CDATA[D:\\emeker\\dev\\college\\]]></app.fileview.path>
+                <app.pdf.path><![CDATA[D:\\emeker\\dev\\pdf\\]]></app.pdf.path>
+                <app.doc.path><![CDATA[http://127.0.0.1:8012]]></app.doc.path>
+                <act.cors.origin><![CDATA[http://127.0.0.1]]></act.cors.origin>
+                <act.cors.max_age>1800</act.cors.max_age>
+                <app.mklogin.path><![CDATA[http://dptest.emeker.com]]></app.mklogin.path>
+                <app.collegepay.path><![CDATA[http://127.0.0.1:9066]]></app.collegepay.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.college.url><![CDATA[jdbc:mysql://123.56.48.38:3306/college?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.college.url>
+                <db.college.username>root</db.college.username>
+                <db.college.password>eMj9090123123_mysql</db.college.password>
+
+                <db.mk.url><![CDATA[jdbc:mysql://123.56.48.38:3306/1024mk?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.mk.url>
+                <db.mk.username>root</db.mk.username>
+                <db.mk.password>eMj9090123123_mysql</db.mk.password>
+
+                <act.http.port>1999</act.http.port>
+                <act.cli.port>1800</act.cli.port>
+
+                <app.qiniu.path><![CDATA[/data/xueyuan/files/userfaceimg/]]></app.qiniu.path>
+                <app.fileview.path><![CDATA[/data/xueyuan/files/college/]]></app.fileview.path>
+                <app.pdf.path><![CDATA[/data/xueyuan/files/pdf/]]></app.pdf.path>
+                <app.doc.path><![CDATA[http://101.200.218.24:8012]]></app.doc.path>
+                <act.cors.origin><![CDATA[http://101.200.218.24:8012]]></act.cors.origin>
+                <act.cors.max_age>1800</act.cors.max_age>
+                <app.mklogin.path><![CDATA[http://dptest.emeker.com]]></app.mklogin.path>
+                <app.collegepay.path><![CDATA[http://reg.emeker.com]]></app.collegepay.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <db.college.url><![CDATA[jdbc:mysql://127.0.0.1:3306/college?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.college.url>
+                <db.college.username>root</db.college.username>
+                <db.college.password><![CDATA[Eme!2#456$&*]]></db.college.password>
+
+                <db.mk.url><![CDATA[jdbc:mysql://112.74.133.232:3306/mk?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC]]></db.mk.url>
+                <db.mk.username>root</db.mk.username>
+                <db.mk.password><![CDATA[Eme!2#456$&*]]></db.mk.password>
+
+                <act.http.port>1999</act.http.port>
+                <act.cli.port>1800</act.cli.port>
+
+                <app.qiniu.path><![CDATA[/data/xueyuan/files/userfaceimg/]]></app.qiniu.path>
+                <app.fileview.path><![CDATA[/data/xueyuan/files/college/]]></app.fileview.path>
+                <app.pdf.path><![CDATA[/data/xueyuan/files/pdf/]]></app.pdf.path>
+                <app.doc.path><![CDATA[https://file.emeker.com]]></app.doc.path>
+                <act.cors.origin><![CDATA[http://127.0.0.1]]></act.cors.origin>
+                <act.cors.max_age>1800</act.cors.max_age>
+                <app.mklogin.path><![CDATA[https://3.emeker.com]]></app.mklogin.path>
+                <app.collegepay.path><![CDATA[https://pay.emeker.com]]></app.collegepay.path>
+            </properties>
+        </profile>
+    </profiles>
+</project>

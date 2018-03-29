@@ -1,13 +1,13 @@
 package com.mk.college;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 @SuppressWarnings("unused")
 public class VerifyCodeUtils {
@@ -66,11 +66,10 @@ public class VerifyCodeUtils {
      *
      * @param w
      * @param h
-     * @param os
      * @param code
      * @throws IOException
      */
-    public static void outputImage(int w, int h, String code, OutputStream os) {
+    public static byte[] outputImage(int w, int h, String code) {
         int verifySize = code.length();
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Random rand = new Random();
@@ -130,13 +129,13 @@ public class VerifyCodeUtils {
         }
 
         g2.dispose();
-//        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             ImageIO.write(image, "jpg", os);
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        return os.toByteArray();
+        return os.toByteArray();
     }
 
     private static Color getRandColor(int fc, int bc) {
